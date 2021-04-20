@@ -11,8 +11,6 @@ void leIndex(Lista* paginas){
     while(fscanf(index, "%s\n", nomePagina) == 1){
         Pagina* pagina = inicializaPagina(nomePagina);
         insereLista(paginas, pagina);
-
-        imprimePagina(pagina);
     }
 
     fclose(index);
@@ -29,6 +27,7 @@ void leGrafo(){
 int main(int argc, char* argv[]){
     Lista* paginas = inicializaLista();
     leIndex(paginas);
-
+    imprimeLista(paginas);
+    liberaLista(paginas);
     return 0;
 }
