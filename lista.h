@@ -7,6 +7,7 @@
     typedef struct lista Lista;
 
     Lista* inicializaLista();
+    int listaVazia(Lista*);
     void insereLista(Lista*, Pagina*);
     void imprimeLista(Lista*);
     void liberaLista(Lista*);
