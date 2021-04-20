@@ -2,6 +2,7 @@
 #include "pagina.h"
 #include "lista.h"
 
+//Le a lista de paginas presentes em index.txt
 void leIndex(Lista* paginas){
     FILE* index = fopen("index.txt", "r");
 
