@@ -48,5 +48,8 @@ int main(int argc, char* argv[]){
     RBT* mapaPalavraPaginas = inicializaRBT();
 
     liberaLista(paginas);
+    liberaHash(hashSW);
+    liberaRBT(mapaPalavraPaginas);
+
     return 0;
 }
