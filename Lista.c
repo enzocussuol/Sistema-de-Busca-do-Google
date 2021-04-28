@@ -50,6 +50,14 @@ int percorreLista(Lista* lista,int (*cb)(void*, void*),void* dado){
     return 0;
 }
 
+Lista* retornaProx(Lista* lista){
+    return lista->prox;
+}
+
+void* retornaItem(Lista* lista){
+    return lista->item;
+}
+
 void liberaLista(Lista* lista){
     Lista* p = lista;
     Lista* aux;

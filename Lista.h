@@ -17,6 +17,10 @@ Lista* retiraLista(Lista* lista, int (*cb)(void*,void*),void* chave);
 
 int percorreLista(Lista* lista,int (*cb)(void*, void*),void* dado);
 
+Lista* retornaProx(Lista* lista);
+
+void* retornaItem(Lista* lista);
+
 void liberaLista(Lista* lista);
 
 #endif //EXERCICIO12_LISTA_H

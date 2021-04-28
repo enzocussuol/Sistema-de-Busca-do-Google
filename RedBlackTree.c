@@ -48,6 +48,8 @@ RBT* insereRBT( RBT* rbtree,Pagina* pagina , char* chave ){
     if(isRed(rbtree->esquerda) && isRed(rbtree->esquerda->esquerda)) rbtree = rotateRight(rbtree);
     //SPLIT 4 NODE
     if(isRed(rbtree->esquerda) && isRed(rbtree->direita)) flipColors(rbtree);
+
+    return rbtree;
 }
 
 int buscaRBT(RBT * rbtree,char* chave){

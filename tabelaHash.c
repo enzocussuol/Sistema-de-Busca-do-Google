@@ -33,6 +33,16 @@ int acessaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*),
     return 0;
 }
 
+int buscaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado){
+    int pos = findHash(dado, hash->tam);
+
+    int flag = percorreLista(hash->conteudo[pos],compare,dado);
+    if(flag) return 1;
+
+
+    return 0;
+}
+
 void liberaHash(Hash * hash){
     for(int i = 0; i < hash->tam; i++){
         liberaLista(hash->conteudo[i]);
@@ -45,7 +55,7 @@ void liberaHash(Hash * hash){
 void imprimeHash(Hash *hash, void funcaoImprime(void *,void*)){
     printf("tamanho da hash: %d\n", hash->tam);
     for(int i=0; i<hash->tam; i++){
-        printf("Pos %d da hash\n", i);
+        //printf("Pos %d da hash\n", i);
         percorreLista(hash->conteudo[i], (int (*)(void *, void *)) funcaoImprime, 0);
     }
 }
