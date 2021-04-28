@@ -53,7 +53,7 @@ int hashPagina(Pagina* pagina, int tamHash){
 
 void imprimePagina(Pagina* p){
 
-    printf("Pagina: %s, rank : %.2f\n",p->nome,p->rank);
+    printf("Pagina: %s ",p->nome);
 
 }
 void liberaPagina(Pagina* p){

@@ -17,9 +17,7 @@ struct rbt{
 };
 
 RBT* inicializaRBT(){
-
     return NULL;
-
 }
 
 static int compare(char* a, char* b){
@@ -55,7 +53,7 @@ RBT* insereRBT( RBT* rbtree,Pagina* pagina , char* chave ){
     return rbtree;
 }
 
-int buscaRBT(RBT * rbtree,char* chave){
+int buscaRBT(RBT * rbtree, char* chave){
     while(rbtree != NULL) {
         int comp;
         comp = compare(chave,rbtree->chave);
@@ -63,6 +61,7 @@ int buscaRBT(RBT * rbtree,char* chave){
         else if(comp > 0) rbtree = rbtree->direita;
         else return 1;
     }
+
     return -1;
 }
 
@@ -97,6 +96,21 @@ void flipColors(RBT* rbtree){
     rbtree->color = RED;
     rbtree->esquerda->color = BLACK;
     rbtree->direita->color = BLACK;
+}
+
+void imprimeRBT(RBT* rbtree){
+    if(rbtree == NULL){
+        return;
+    }
+
+    imprimeRBT(rbtree->esquerda);
+    printf("PALAVRA: ");
+    printf("%s\t|\t",rbtree->chave);
+    printf("Paginas: ");
+    imprimeHash(rbtree->PaginasOcorrencia, (void (*)(void *, void *)) imprimePagina);
+    printf("\n");
+
+    imprimeRBT(rbtree->direita);
 }
 
 void liberaRBT(RBT* rbtree){

@@ -39,8 +39,7 @@ Lista* retiraLista(Lista* lista, int (*cb)(void*,void*),void* chave){
 
 }
 
-int percorreLista(Lista* lista,int (*cb)(void*, void*),void* dado){
-
+int percorreLista(Lista* lista, int (*cb)(void*, void*), void* dado){
     Lista* p;
 
     for(p=lista;p!=NULL;p=p->prox){

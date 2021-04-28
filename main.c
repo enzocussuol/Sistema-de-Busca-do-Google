@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "pagina.h"
 #include "Lista.h"
 #include "tabelaHash.h"
@@ -85,6 +86,10 @@ RBT* Mapeia(Lista * paginas,Hash* h, RBT * rbt){
     }
 
     return rbt;
+}
+
+int imprimeString(char* string){
+    return printf("%s\n", string);
 }
 
 int main(int argc, char* argv[]){
