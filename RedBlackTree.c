@@ -7,6 +7,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define TAMHASH 1489
+
 struct rbt{
     char* chave;
     Hash* PaginasOcorrencia;
@@ -27,7 +29,8 @@ static int compare(char* a, char* b){
 RBT* insereRBT( RBT* rbtree,Pagina* pagina , char* chave ){
     if(rbtree == NULL){
         RBT* novo = malloc(sizeof(*novo));
-        novo->PaginasOcorrencia = inicializaHash();
+        novo->PaginasOcorrencia = inicializaHash(TAMHASH);
+        acessaHash(novo->PaginasOcorrencia, (int (*)(void *, int)) hashPagina,(int (*)(void *, void *)) comparaPagina, pagina);
         novo->chave = strdup(chave);
         novo->direita = NULL;
         novo->esquerda = NULL;

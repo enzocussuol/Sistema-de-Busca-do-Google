@@ -4,12 +4,32 @@
 #include "tabelaHash.h"
 #include "stopword.h"
 #include "RedBlackTree.h"
+#include "Grafo.h"
+#include <ctype.h>
+
+#define TAM_WORD 50
+#define TAMHASH 7
+#define MAX_PALAVRAS 10
 
 //Le a lista de paginas presentes em index.txt
 Lista* leIndex(Lista* paginas){
     FILE* index = fopen("../index.txt", "r");
 
-    char nomePagina[30];
+    char nomePagina[TAM_WORD];
+
+    while(fscanf(index, "%s\n", nomePagina) == 1){
+        Pagina* pagina = inicializaPagina(nomePagina);
+        paginas = insereLista(paginas, pagina);
+    }
+
+    fclose(index);
+    return paginas;
+}
+
+Lista* leGrafo(Lista* paginas, Grafo * grafo){
+    FILE* filegrafo = fopen("../grafo.txt", "r");
+
+    char nomePagina[TAM_WORD];
 
     while(fscanf(index, "%s\n", nomePagina) == 1){
         Pagina* pagina = inicializaPagina(nomePagina);
@@ -71,9 +91,8 @@ int main(int argc, char* argv[]){
     Lista* paginas = criaLista();
     paginas = leIndex(paginas);
 
-    Hash* hashSW = inicializaHash(7);
+    Hash* hashSW = inicializaHash(TAMHASH);
     leStopWords(hashSW);
-    imprimeHash(hashSW, (void (*)(void *, void *)) imprimeStopWord);
 
     RBT* mapaPalavraPaginas = inicializaRBT();
     mapaPalavraPaginas = Mapeia(paginas, hashSW, mapaPalavraPaginas);

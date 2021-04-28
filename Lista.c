@@ -66,5 +66,4 @@ void liberaLista(Lista* lista){
         free(p);
         p = aux;
     }
-
 }

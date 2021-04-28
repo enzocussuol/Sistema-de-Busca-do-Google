@@ -53,7 +53,7 @@ void liberaHash(Hash * hash){
 }
 
 void imprimeHash(Hash *hash, void funcaoImprime(void *,void*)){
-    printf("tamanho da hash: %d\n", hash->tam);
+    //printf("tamanho da hash: %d\n", hash->tam);
     for(int i=0; i<hash->tam; i++){
         //printf("Pos %d da hash\n", i);
         percorreLista(hash->conteudo[i], (int (*)(void *, void *)) funcaoImprime, 0);
