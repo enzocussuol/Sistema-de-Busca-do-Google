@@ -16,4 +16,7 @@ Grafo* inicializaGrafo();
 Grafo* preencheGrafo(Grafo * g, Hash * paginas,int qtdPag);
 void setVertices(Grafo*g,Lista* lista);
 
+void imprimeGrafo(Grafo*);
+void liberaGrafo(Grafo*);
+
 #endif //TRABALHO_3_DE_ED2_GRAFO_H

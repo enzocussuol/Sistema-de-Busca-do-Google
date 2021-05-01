@@ -44,3 +44,13 @@ Grafo* preencheGrafo(Grafo * g, Hash* h,int qtdPag){
 void setVertices(Grafo*g,Lista* lista){
     //g->vertices=lista;
 }
+
+void imprimeGrafo(Grafo* grafo){
+
+}
+
+void liberaGrafo(Grafo* grafo){
+//    liberaLista(grafo->listaAdj);
+//    liberaLista(grafo->vertices);
+//    free(grafo);
+}

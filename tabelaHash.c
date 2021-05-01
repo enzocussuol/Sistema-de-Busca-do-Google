@@ -43,7 +43,11 @@ int buscaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), 
     return 0;
 }
 
-void liberaHash(Hash * hash){
+int retornaTam(Hash* hash){
+    return hash->tam;
+}
+
+void liberaHash(Hash * hash,int (*cb)(void*,void*)){
     for(int i = 0; i < hash->tam; i++){
         if(cb != NULL) percorreLista(hash->conteudo[i],cb,0);
         liberaLista(hash->conteudo[i]);
