@@ -3,34 +3,44 @@
 //
 
 #include "Grafo.h"
-
-typedef struct vertice{
-    Pagina* pagina;
-    int numAdj;
-}Vertice;
-
-typedef struct aresta{
-    Vertice origem,destino;
-    double peso;
-}Aresta;
-
+#include "tabelaHash.h"
+#define TAM_WORD 10
 
 struct grafo{
-
-    Lista* listaAdj;
-    Lista* vertices;
-
+    //danilo suggestion
+    int ** matrizAdj; //matriz que indica se matriz[i][j], tem conexao da pagina I para J
+    Pagina** vetPagina; // indica qual pagina se trata na posicao da matriz
 };
 
-Grafo* inicializaGrafo(){
+Grafo* inicializaGrafo(int nVertices){
+    Grafo* novoGrafo = (Grafo*) malloc(sizeof(Grafo));
 
-    Grafo* novo = malloc(sizeof(*novo));
-    novo->listaAdj = criaLista();
-    novo->vertices = criaLista();
-    return novo;
+    novoGrafo->matrizAdj = malloc(sizeof(int*)*nVertices);
+
+    for(int i = 0 ;i < nVertices;i++){
+        novoGrafo->matrizAdj[i] = malloc(sizeof(int)*nVertices);
+    }
+
+    return novoGrafo;
 
 }
 
+Grafo* preencheGrafo(Grafo * g, Hash* h,int qtdPag){
+
+    FILE* input = fopen("../graph.txt","r");
+    char nomepagina[TAM_WORD];
+    int numconexoes;
+    while(fscanf(input,"%s %d", nomepagina, &numconexoes) == 1){
+
+
+        char conect[TAM_WORD];
+        for(int i = 0; i < numconexoes; i++){
+            fscanf(input, "%s", conect);
+
+        }
+    }
+}
+
 void setVertices(Grafo*g,Lista* lista){
-    g->vertices=lista;
+    //g->vertices=lista;
 }

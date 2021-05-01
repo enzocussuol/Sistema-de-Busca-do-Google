@@ -116,8 +116,9 @@ void imprimeRBT(RBT* rbtree){
 void liberaRBT(RBT* rbtree){
     if(rbtree != NULL){
         free(rbtree->chave);
-        liberaHash(rbtree->PaginasOcorrencia);
+        liberaHash(rbtree->PaginasOcorrencia,NULL);
         liberaRBT(rbtree->esquerda);
         liberaRBT(rbtree->direita);
     }
+    free(rbtree);
 }

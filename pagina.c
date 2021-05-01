@@ -45,10 +45,10 @@ int hashPagina(Pagina* pagina, int tamHash){
     int cont = 0;
 
     for(int i = 0; i < strlen(pagina->nome); i++){
-        cont += pagina->nome[i];
+        cont = (31*cont + pagina->nome[i]) %tamHash;
     }
 
-    return cont%tamHash;
+    return cont;
 }
 
 void imprimePagina(Pagina* p){

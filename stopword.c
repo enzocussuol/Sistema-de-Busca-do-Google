@@ -29,10 +29,10 @@ int hashStopWord(StopWord* stopWord, int tamHash){
     int cont = 0;
 
     for(int i = 0; i < stopWord->tam; i++){
-        cont += stopWord->palavra[i];
+        cont = (31*cont + stopWord->palavra[i]) % tamHash;
     }
 
-    return cont%tamHash;
+    return cont;
 }
 
 int comparaStopWord(StopWord* sw1, StopWord* sw2){

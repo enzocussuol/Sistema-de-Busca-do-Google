@@ -13,6 +13,6 @@ typedef struct tabelahash Hash;
 Hash * inicializaHash();
 int acessaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado);
 int buscaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado);
-void liberaHash(Hash* h);
+void liberaHash(Hash* h,int (*cb)(void*,void*));
 void imprimeHash(Hash * h, void func(void*,void*));
 #endif //TRABALHO_3_DE_ED2_TABELAHASH_H
