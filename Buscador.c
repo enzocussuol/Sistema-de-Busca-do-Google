@@ -1,13 +1,6 @@
 //
 // Created by bonella on 01/05/2021.
 //
-#include <ctype.h>
-#include <string.h>
-#include "Buscador.h"
-#include "Lista.h"
-#include "tabelaHash.h"
-#include "RedBlackTree.h"
-#include "stopword.h"
 
 #include "Buscador.h"
 

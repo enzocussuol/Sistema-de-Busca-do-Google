@@ -15,9 +15,9 @@ typedef struct Vertice{
 }Vertice;
 
 struct grafo{
-    //danilo suggestion
     int ** matrizAdj; //matriz que indica se matriz[i][j], tem conexao da pagina I para J
-    Pagina** vetPagina; // indica qual pagina se trata na posicao da matriz
+    int tam;
+    Vertice* vertices;
 };
 
 Grafo* inicializaGrafo(int nVertices){
@@ -32,24 +32,41 @@ Grafo* inicializaGrafo(int nVertices){
         }
     }
 
-    return novoGrafo;
+    novoGrafo->tam = nVertices;
 
+    return novoGrafo;
 }
 
 void preencheGrafo(Grafo * g, Buscador * buscador){
     FILE* input = fopen("../graph.txt","r");
-    char nomepagina[TAM_WORD];
-    int numconexoes;
-    while(fscanf(input,"%s %d", nomepagina, &numconexoes) == 1){
+    if(input == NULL){
+        printf("Erro na abertura do arquivo grafo\n");
+        exit(1);
+    }
 
+    char nomePagina[TAM_WORD];
+    int numConexoes, indiceOrigem, indiceDestino;
 
-        char conect[TAM_WORD];
-        for(int i = 0; i < numconexoes; i++){
-            fscanf(input, "%s", conect);
-
+    while(fscanf(input,"%s%d", nomePagina, &numConexoes) == 2){
+        Pagina* aux = buscaDadoHash(retornaHashPaginas(buscador),
+                            (int (*)(void *, int)) hashNomePagina,
+                            (int (*)(void *, void *)) comparaNome,
+                            nomePagina);
+        indiceOrigem = getID(aux);
+        g->vertices[indiceOrigem].pagina = aux;
+        g->vertices[indiceOrigem].numAdj = numConexoes;
+        for(int i = 0; i < numConexoes; i++){
+            fscanf(input, "%s", nomePagina);
+            aux = buscaDadoHash(retornaHashPaginas(buscador),
+                                (int (*)(void *, int)) hashNomePagina,
+                                (int (*)(void *, void *)) comparaNome,
+                                nomePagina);
+            indiceDestino = getID(aux);
+            g->matrizAdj[indiceOrigem][indiceDestino] = 1;
         }
         fscanf(input, "\n");
     }
+    fclose(input);
 }
 
 static double calculaEk(Grafo* g,double* ant){
@@ -120,11 +137,19 @@ void calculaPageRankPM(Buscador*b, Grafo* grafo){
 }
 
 void imprimeGrafo(Grafo* grafo){
-
+    for(int i = 0; i < grafo->tam; i++){
+        for(int j = 0; j < grafo->tam; j++){
+            printf("%d ", grafo->matrizAdj[i][j]);
+        }
+        printf("\n");
+    }
 }
 
 void liberaGrafo(Grafo* grafo){
-//    liberaLista(grafo->listaAdj);
-//    liberaLista(grafo->vertices);
-//    free(grafo);
+    for(int i = 0; i < grafo->tam; i++){
+        free(grafo->matrizAdj[i]);
+    }
+
+    free(grafo->matrizAdj);
+    free(grafo);
 }
