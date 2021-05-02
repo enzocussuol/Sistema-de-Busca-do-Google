@@ -8,8 +8,10 @@
     double getRank(Pagina*);
     int getID(Pagina* p);
     void setRank(Pagina*, double);
+    int hashNomePagina(char*, int);
     int hashPagina(Pagina*, int);
     int comparaPagina(Pagina*, Pagina*);
+    int comparaNome(Pagina*, char*);
     void imprimePagina(Pagina*);
     void liberaPagina(Pagina*);
 #endif

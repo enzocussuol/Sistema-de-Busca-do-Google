@@ -40,29 +40,33 @@ int getID(Pagina* p){
 }
 
 void setRank(Pagina* p, double rank){
-
     p->rank = rank;
-
 }
 
 int comparaPagina(Pagina* a,Pagina* b){
     return strcmp(a->nome,b->nome);
 }
+int comparaNome(Pagina*a, char * nome){
+    return strcmp(a->nome, nome);
+}
 
-int hashPagina(Pagina* pagina, int tamHash){
+int hashNomePagina(char * nomepagina, int tamHash){
     int cont = 0;
 
-    for(int i = 0; i < strlen(pagina->nome); i++){
-        cont = (31*cont + pagina->nome[i]) %tamHash;
+    for(int i = 0; i < strlen(nomepagina); i++){
+        cont = (31*cont + nomepagina[i]) %tamHash;
     }
 
     return cont;
 }
+int hashPagina(Pagina* pagina, int tamHash){
+    return hashNomePagina(pagina->nome, tamHash);
+}
+
+
 
 void imprimePagina(Pagina* p){
-
-    printf("Pagina: %s ",p->nome);
-
+    printf("Pagina: %s ID: %d PageRank %.6f \n",p->nome,p->id,p->rank);
 }
 void liberaPagina(Pagina* p){
 

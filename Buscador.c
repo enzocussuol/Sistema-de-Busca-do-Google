@@ -19,7 +19,7 @@ struct buscador{
     Hash* hashPaginas;
     int numPaginas;
     Hash* hashSW;
-    RBT* mapaPalavraPaginas;
+    RBT* mapaPalavra;
 };
 
 Buscador* initBuscador(){
@@ -29,7 +29,7 @@ Buscador* initBuscador(){
     novo->listaPaginas = criaLista();
     novo->hashPaginas = inicializaHash(TAMHASH);
     novo->hashSW = inicializaHash(TAMHASH);
-    novo->mapaPalavraPaginas = inicializaRBT();
+    novo->mapaPalavra = inicializaRBT();
     novo->numPaginas = 0;
 
     return novo;
@@ -109,7 +109,7 @@ void MapeiaPalavras(Buscador * buscador){
             stringLower(palavra);
             StopWord *PossivelSW = inicializaStopWord(palavra);
             if (!buscaHash(buscador->hashSW, (int (*)(void *, int)) hashStopWord, (int (*)(void *, void *)) comparaStopWord,PossivelSW)) {
-                buscador->mapaPalavraPaginas = insereRBT(buscador->mapaPalavraPaginas, p, palavra);
+                buscador->mapaPalavra = insereRBT(buscador->mapaPalavra, p, palavra);
             }
             liberaStopWord(PossivelSW);
         }
@@ -141,6 +141,6 @@ void LiberaBuscador(Buscador *b){
     percorreLista(b->listaPaginas, (int (*)(void *, void *)) liberaPagina, NULL);
     liberaLista(b->listaPaginas);
     liberaHash(b->hashPaginas,NULL);
-    liberaRBT(b->mapaPalavraPaginas);
+    liberaRBT(b->mapaPalavra);
     free(b);
 }

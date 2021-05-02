@@ -57,7 +57,10 @@ int retornaTam(Hash* hash){
 
 void liberaHash(Hash * hash,int (*cb)(void*,void*)){
     for(int i = 0; i < hash->tam; i++){
-        if(cb != NULL) percorreLista(hash->conteudo[i],cb,0);
+        if(cb != NULL){
+            percorreLista(hash->conteudo[i],cb,0);
+        }
+
         liberaLista(hash->conteudo[i]);
     }
 

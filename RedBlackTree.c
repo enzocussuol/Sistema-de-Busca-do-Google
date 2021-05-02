@@ -106,7 +106,7 @@ void imprimeRBT(RBT* rbtree){
     imprimeRBT(rbtree->esquerda);
     printf("PALAVRA: ");
     printf("%s\t|\t",rbtree->chave);
-    printf("Paginas: ");
+    printf("Paginas: \n");
     imprimeHash(rbtree->PaginasOcorrencia, (void (*)(void *, void *)) imprimePagina);
     printf("\n");
 
