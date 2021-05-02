@@ -15,7 +15,7 @@ typedef struct Vertice{
 }Vertice;
 
 struct grafo{
-    int ** matrizAdj; //matriz que indica se matriz[i][j], tem conexao da pagina I para J
+    char ** matrizAdj; //matriz que indica se matriz[i][j], tem conexao da pagina I para J
     int tam;
     Vertice* vertices;
 };
@@ -23,10 +23,10 @@ struct grafo{
 Grafo* inicializaGrafo(int nVertices){
     Grafo* novoGrafo = (Grafo*) malloc(sizeof(Grafo));
 
-    novoGrafo->matrizAdj = malloc(sizeof(int*)*nVertices);
+    novoGrafo->matrizAdj = malloc(sizeof(char*)*nVertices);
     novoGrafo->vertices = malloc(sizeof(Vertice)*nVertices);
     for(int i = 0 ;i < nVertices;i++){
-        novoGrafo->matrizAdj[i] = malloc(sizeof(int)*nVertices);
+        novoGrafo->matrizAdj[i] = malloc(sizeof(char)*nVertices);
         for(int j = 0;j < nVertices ; j++){ //inicializa todas as casa da matriz com 0
            novoGrafo->matrizAdj[i][j] = 0;
         }
@@ -38,7 +38,7 @@ Grafo* inicializaGrafo(int nVertices){
 }
 
 void preencheGrafo(Grafo * g, Buscador * buscador){
-    FILE* input = fopen("../graph.txt","r");
+    FILE* input = fopen("graph.txt","r");
     if(input == NULL){
         printf("Erro na abertura do arquivo grafo\n");
         exit(1);
@@ -113,7 +113,7 @@ void calculaPageRankPM(Buscador*b, Grafo* grafo){
     for(int i = 0;i< grafo->tam;i++){
         ant[i] = getRank(grafo->vertices[i].pagina);
     }
-    imprimeBuscador(b);
+
     primeiroTermo = (1 - alfa)/n;
 
     int j =0;
@@ -134,7 +134,7 @@ void calculaPageRankPM(Buscador*b, Grafo* grafo){
             setRank(grafo->vertices[i].pagina, PR);
             somapr += PR;
         }
-        //printf("PRTOTAL: %f ek : %f\n",somapr,calculaEk(grafo,ant));
+        //printf("PRTOTAL: %f ek : %.16f\n",somapr,calculaEk(grafo,ant));
     }while(calculaEk(grafo,ant) > 0.000001);
 }
 
@@ -151,7 +151,7 @@ void liberaGrafo(Grafo* grafo){
     for(int i = 0; i < grafo->tam; i++){
         free(grafo->matrizAdj[i]);
     }
-
+    free(grafo->vertices);
     free(grafo->matrizAdj);
     free(grafo);
 }

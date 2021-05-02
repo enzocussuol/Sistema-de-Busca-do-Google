@@ -66,7 +66,7 @@ int hashPagina(Pagina* pagina, int tamHash){
 
 
 void imprimePagina(Pagina* p){
-    printf("Pagina: %s ID: %d PageRank %.6f \n",p->nome,p->id,p->rank);
+    printf("Pagina: %s ID: %d PageRank %.8f \n",p->nome,p->id,p->rank);
 }
 void liberaPagina(Pagina* p){
 

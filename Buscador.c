@@ -46,7 +46,7 @@ RBT* retornaRBT(Buscador* b){
 }
 
 void LePaginas(Buscador* buscador){
-    FILE* index = fopen("../index.txt", "r");
+    FILE* index = fopen("index.txt", "r");
 
     char nomePagina[TAM_WORD];
     int i = 0;
@@ -70,7 +70,7 @@ static void stringLower(char* palavra){
 }
 
 static void leStopWords(Buscador* buscador){
-    FILE* filesw = fopen("../stopwords.txt", "r");
+    FILE* filesw = fopen("stopwords.txt", "r");
 
     char palavra[30];
     while(fscanf(filesw, "%s\n", palavra) == 1){
@@ -106,6 +106,7 @@ void MapeiaPalavras(Buscador * buscador){
             }
             liberaStopWord(PossivelSW);
         }
+        fclose(file);
     }
 
     //neste momento Hash de StopWords pode ser liberada
