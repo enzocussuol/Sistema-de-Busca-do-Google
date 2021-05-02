@@ -115,15 +115,17 @@ void calculaPageRankPM(Buscador*b, Grafo* grafo){
     }
     imprimeBuscador(b);
     primeiroTermo = (1 - alfa)/n;
+
     int j =0;
     do{
         //printf("Iteracao %d: ", ++j);
         double  somapr = 0;
         for(int i = 0; i < grafo->tam; i++){
             ultimoTermo = calculaUltimoTermo(grafo, ant, i);
-            PR = primeiroTermo + ultimoTermo;
+            PR = primeiroTermo + (alfa*ultimoTermo);
 
             ant[i] = getRank(grafo->vertices[i].pagina);
+
             if(grafo->vertices[i].numAdj == 0){
                 termoEspecial = alfa * ant[i];
                 PR += termoEspecial;
