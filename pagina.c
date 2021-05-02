@@ -6,14 +6,16 @@
 struct pagina{
     char* nome;
     double rank;
+    int id;
 };
 
-Pagina* inicializaPagina(char* nome){
+Pagina* inicializaPagina(char* nome,int id){
 
     Pagina* new = malloc(sizeof(*new));
 
     new->nome = strdup(nome);
     new->rank = 0;
+    new->id = id;
 
     return new;
 
@@ -28,6 +30,12 @@ char* getNome(Pagina* p){
 double getRank(Pagina* p){
 
     return p->rank;
+
+}
+
+int getID(Pagina* p){
+
+    return p->id;
 
 }
 

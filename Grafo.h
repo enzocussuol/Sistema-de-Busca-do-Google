@@ -9,13 +9,13 @@
 #include "pagina.h"
 #include "tabelaHash.h"
 #include "Lista.h"
+#include "Buscador.h"
 
 typedef struct grafo Grafo;
 
 Grafo* inicializaGrafo();
-Grafo* preencheGrafo(Grafo * g, Hash * paginas,int qtdPag);
-void setVertices(Grafo*g,Lista* lista);
-
+void preencheGrafo(Grafo * g , Buscador * buscador);
+void calculaPageRankPM(Buscador*b, Grafo* grafo);
 void imprimeGrafo(Grafo*);
 void liberaGrafo(Grafo*);
 

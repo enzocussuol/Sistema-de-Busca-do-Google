@@ -48,6 +48,15 @@ int percorreLista(Lista* lista, int (*cb)(void*, void*), void* dado){
     }
     return 0;
 }
+void* percorreListaRetornaDado(Lista* lista, int (*cb)(void*, void*), void* dado){
+    Lista* p;
+
+    for(p=lista;p!=NULL;p=p->prox){
+        int r = cb(p->item, dado);
+        if(r == 0) return p->item;
+    }
+    return NULL;
+}
 
 Lista* retornaProx(Lista* lista){
     return lista->prox;

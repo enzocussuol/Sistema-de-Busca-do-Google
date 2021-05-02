@@ -9,6 +9,7 @@
 #include "RedBlackTree.h"
 #include "stopword.h"
 
+#include "Buscador.h"
 
 #define TAM_WORD 50
 #define TAMHASH 49
@@ -35,19 +36,36 @@ Buscador* initBuscador(){
 
 }
 
+Lista* retornaListaPaginas(Buscador* b){
+    return b->listaPaginas;
+}
+
+Hash* retornaHashPaginas(Buscador* b){
+    return b->hashPaginas;
+}
+
+int retornaNumPaginas(Buscador* b){
+    return b->numPaginas;
+}
+
+RBT* retornaRBT(Buscador* b){
+    return b->mapaPalavra;
+}
+
 void LePaginas(Buscador* buscador){
     FILE* index = fopen("../index.txt", "r");
 
     char nomePagina[TAM_WORD];
-
+    int i = 0;
     while(fscanf(index, "%s\n", nomePagina) == 1){
-        Pagina* pagina = inicializaPagina(nomePagina);
+        Pagina* pagina = inicializaPagina(nomePagina,i);
         acessaHash(buscador->hashPaginas,
                    (int (*)(void *, int)) hashPagina,
                    (int (*)(void *, void *)) comparaPagina,
                    pagina);
         buscador->listaPaginas = insereLista(buscador->listaPaginas,pagina);
         buscador->numPaginas++;
+        i++;
     }
 
     fclose(index);
@@ -98,7 +116,7 @@ void MapeiaPalavras(Buscador * buscador){
     }
 
     //neste momento Hash de StopWords pode ser liberada
-    liberaHash(buscador->hashSW,liberaStopWord);
+    liberaHash(buscador->hashSW, (int (*)(void *, void *)) liberaStopWord);
 }
 
 void imprimeBuscador(Buscador* buscador){
@@ -106,21 +124,21 @@ void imprimeBuscador(Buscador* buscador){
     printf("O buscador possui %d paginas\n\n",buscador->numPaginas);
 
     printf("Lista de paginas\n\n");
-    percorreLista(buscador->listaPaginas,imprimePagina,0);
+    percorreLista(buscador->listaPaginas, (int (*)(void *, void *)) imprimePagina, NULL);
 
-    printf("\n\nHash de paginas\n\n");
-    imprimeHash(buscador->hashPaginas,imprimePagina);
-
-    printf("\n\nHash de Stopwords\n\n");
-    imprimeHash(buscador->hashSW,imprimeStopWord);
-
-    printf("\n\nMapa de Palavras\n\n");
-    imprimeRBT(buscador->mapaPalavraPaginas);
+//    printf("\n\nHash de paginas\n\n");
+//    imprimeHash(buscador->hashPaginas, (void (*)(void *, void *)) imprimePagina);
+//
+//    printf("\n\nHash de Stopwords\n\n");
+//    imprimeHash(buscador->hashSW, (void (*)(void *, void *)) imprimeStopWord);
+//
+//    printf("\n\nMapa de Palavras\n\n");
+//    imprimeRBT(buscador->mapaPalavra);
 
 }
 
 void LiberaBuscador(Buscador *b){
-    percorreLista(b->listaPaginas,liberaPagina,0);
+    percorreLista(b->listaPaginas, (int (*)(void *, void *)) liberaPagina, NULL);
     liberaLista(b->listaPaginas);
     liberaHash(b->hashPaginas,NULL);
     liberaRBT(b->mapaPalavraPaginas);

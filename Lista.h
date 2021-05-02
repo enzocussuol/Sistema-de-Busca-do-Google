@@ -15,6 +15,8 @@ Lista* insereLista(Lista* lista,void* item);
 
 Lista* retiraLista(Lista* lista, int (*cb)(void*,void*),void* chave);
 
+void* percorreListaRetornaDado(Lista* lista, int (*cb)(void*, void*), void* dado);
+
 int percorreLista(Lista* lista,int (*cb)(void*, void*),void* dado);
 
 Lista* retornaProx(Lista* lista);

@@ -39,6 +39,14 @@ int buscaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), 
     int flag = percorreLista(hash->conteudo[pos],compare,dado);
     if(flag) return 1;
 
+    return 0;
+}
+
+void* buscaDadoHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado){
+    int pos = findHash(dado, hash->tam);
+
+    void* flag = percorreListaRetornaDado(hash->conteudo[pos],compare,dado);
+    if(flag) return flag;
 
     return 0;
 }
@@ -61,6 +69,6 @@ void imprimeHash(Hash *hash, void funcaoImprime(void *,void*)){
     //printf("tamanho da hash: %d\n", hash->tam);
     for(int i=0; i<hash->tam; i++){
         //printf("Pos %d da hash\n", i);
-        percorreLista(hash->conteudo[i], (int (*)(void *, void *)) funcaoImprime, 0);
+        percorreLista(hash->conteudo[i], (int (*)(void *, void *)) funcaoImprime, NULL);
     }
 }

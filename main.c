@@ -20,8 +20,17 @@ int main(int argc, char* argv[]){
     LePaginas(b);
     MapeiaPalavras(b);
 
+    Grafo* grafo = inicializaGrafo(retornaNumPaginas(b));
+
+    preencheGrafo(grafo,b);
+
+    //imprimeBuscador(b);
+
+    calculaPageRankPM(b,grafo);
+
     imprimeBuscador(b);
 
+    liberaGrafo(grafo);
     LiberaBuscador(b);
 
     //
@@ -36,6 +45,5 @@ int main(int argc, char* argv[]){
 //        listaPalavras = insereLista(listaPalavras, strdup(palavra));
 //    }
 //
-
     return 0;
 }
