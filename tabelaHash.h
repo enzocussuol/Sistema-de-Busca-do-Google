@@ -10,6 +10,8 @@ typedef struct tabelahash Hash;
 #include "stdlib.h"
 #include "Lista.h"
 
+
+
 Hash * inicializaHash();
 int retornaItensAtivosHash(Hash* h);
 int acessaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado);

@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+
 #define TAMHASH 1
 
 struct rbt{
