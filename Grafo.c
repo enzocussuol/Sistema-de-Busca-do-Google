@@ -72,12 +72,10 @@ void preencheGrafo(Grafo * g, Buscador * buscador){
 static double calculaEk(Grafo* g,double* ant){
 
     double e = 0;
-    for(int i = 0 ; i< g->tam; i++){
+    for(int i = 0 ; i < g->tam; i++){
         double diff = getRank(g->vertices[i].pagina) - ant[i];
         e += diff*diff;
-
     }
-
     return sqrt(e);
 }
 
@@ -94,7 +92,7 @@ static double calculaUltimoTermo(Grafo* grafo, double* ant, int pos){
 
     for(int j = 0; j < grafo->tam; j++){
         if(grafo->matrizAdj[j][pos] == 1){
-            termo += ant[j]/grafo->vertices[j].numAdj;
+            termo += ant[j]/ grafo->vertices[j].numAdj;
         }
     }
 
@@ -114,17 +112,17 @@ void calculaPageRankPM(Buscador*b, Grafo* grafo){
         ant[i] = getRank(grafo->vertices[i].pagina);
     }
 
-    primeiroTermo = (1 - alfa)/n;
+    primeiroTermo = (1 - alfa)/ n;
 
     int j =0;
     do{
-        //printf("Iteracao %d: ", ++j);
+        j++;
         double  somapr = 0;
+        for(int i = 0; i < grafo->tam;i++) ant[i] = getRank(grafo->vertices[i].pagina);
+
         for(int i = 0; i < grafo->tam; i++){
             ultimoTermo = calculaUltimoTermo(grafo, ant, i);
             PR = primeiroTermo + (alfa*ultimoTermo);
-
-            ant[i] = getRank(grafo->vertices[i].pagina);
 
             if(grafo->vertices[i].numAdj == 0){
                 termoEspecial = alfa * ant[i];
@@ -134,8 +132,9 @@ void calculaPageRankPM(Buscador*b, Grafo* grafo){
             setRank(grafo->vertices[i].pagina, PR);
             somapr += PR;
         }
-        //printf("PRTOTAL: %f ek : %.16f\n",somapr,calculaEk(grafo,ant));
+        //printf("PRTOTAL: %f ek : %.12f\n",somapr,calculaEk(grafo,ant));
     }while(calculaEk(grafo,ant) > 0.000001);
+    //printf("Iteracoes %d\n",j);
 }
 
 void imprimeGrafo(Grafo* grafo){

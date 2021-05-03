@@ -125,9 +125,9 @@ void imprimeBuscador(Buscador* buscador){
 //
 //    printf("\n\nHash de Stopwords\n\n");
 //    imprimeHash(buscador->hashSW, (void (*)(void *, void *)) imprimeStopWord);
-//
-//    printf("\n\nMapa de Palavras\n\n");
-//    imprimeRBT(buscador->mapaPalavra);
+
+    printf("\n\nMapa de Palavras\n\n");
+    imprimeRBT(buscador->mapaPalavra);
 
 }
 

@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
 
     calculaPageRankPM(b,grafo);
 
-    //imprimeBuscador(b);
+    imprimeBuscador(b);
 
     liberaGrafo(grafo);
     LiberaBuscador(b);
