@@ -8,7 +8,6 @@
 #include "Grafo.h"
 #include "Buscador.h"
 
-
 #define TAM_WORD 50
 #define TAMHASH 49
 #define MAX_PALAVRAS 10

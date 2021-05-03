@@ -12,6 +12,7 @@
     int hashPagina(Pagina*, int);
     int comparaPagina(Pagina*, Pagina*);
     int comparaNome(Pagina*, char*);
+    int cmpPRPaginas(const void*, const void*);
     void imprimePagina(Pagina*);
     void liberaPagina(Pagina*);
 #endif

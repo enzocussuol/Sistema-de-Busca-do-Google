@@ -63,11 +63,23 @@ int hashPagina(Pagina* pagina, int tamHash){
     return hashNomePagina(pagina->nome, tamHash);
 }
 
+int cmpPRPaginas(const void* p, const void* q){
+    const Pagina* const* p1 = (const Pagina* const*) p;
+    const Pagina* const* p2 = (const Pagina* const*) q;
 
+    double diferenca = (double) (*p1)->rank - (*p2)->rank;
 
-void imprimePagina(Pagina* p){
-    printf("Pagina: %s ID: %d PageRank %.8f \n",p->nome,p->id,p->rank);
+    if(diferenca > 0) return -1;
+    else if(diferenca < 0) return 1;
+    else{
+        return comparaPagina((Pagina *) p1, (Pagina *) p2);
+    }
 }
+
+void imprimePagina(Pagina * p){
+    printf("Pagina %s, Id %d, Rank %.8lf\n", p->nome, p->id, p->rank);
+}
+
 void liberaPagina(Pagina* p){
 
     free(p->nome);
