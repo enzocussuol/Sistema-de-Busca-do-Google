@@ -4,13 +4,13 @@
 
 #ifndef TRABALHO_3_DE_ED2_BUSCADOR_H
 #define TRABALHO_3_DE_ED2_BUSCADOR_H
-#define TAMHASH 49
+
 
 #include <ctype.h>
 #include <string.h>
 
 #include "Lista.h"
-#include "tabelaHash.h"
+
 #include "RedBlackTree.h"
 #include "stopword.h"
 
@@ -23,6 +23,7 @@ int retornaNumPaginas(Buscador* b);
 RBT* retornaRBT(Buscador* b);
 void LePaginas(Buscador* buscador);
 void MapeiaPalavras(Buscador * buscador);
+void buscadordeTermos(Buscador*b);
 void imprimeBuscador(Buscador* buscador);
 void LiberaBuscador(Buscador *b);
 

@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define TAMHASH 1489
+#define TAMHASH 1
 
 struct rbt{
     char* chave;
@@ -61,8 +61,18 @@ int buscaRBT(RBT * rbtree, char* chave){
         else if(comp > 0) rbtree = rbtree->direita;
         else return 1;
     }
-
     return -1;
+}
+
+Hash* buscaRBTHash(RBT * rbtree, char* chave){
+    while(rbtree != NULL) {
+        int comp;
+        comp = compare(chave,rbtree->chave);
+        if(comp < 0) rbtree = rbtree->esquerda;
+        else if(comp > 0) rbtree = rbtree->direita;
+        else return rbtree->PaginasOcorrencia;
+    }
+    return NULL;
 }
 
 int isRed(RBT* rbtree){
@@ -106,8 +116,8 @@ void imprimeRBT(RBT* rbtree){
     imprimeRBT(rbtree->esquerda);
     printf("PALAVRA: ");
     printf("%s\t|\t",rbtree->chave);
-    printf("Paginas: \n");
-    imprimeHash(rbtree->PaginasOcorrencia, (void (*)(void *, void *)) imprimePagina);
+    //printf("Paginas: \n");
+    //imprimeHash(rbtree->PaginasOcorrencia, (void (*)(void *, void *)) imprimePagina);
     printf("\n");
 
     imprimeRBT(rbtree->direita);

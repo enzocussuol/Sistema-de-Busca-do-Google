@@ -131,6 +131,41 @@ void imprimeBuscador(Buscador* buscador){
 
 }
 
+void buscadordeTermos(Buscador*b){
+
+    printf("Digite o texto que deseja buscar:\n");
+
+    Lista * listaPalavras = criaLista();
+    char palavra[TAM_WORD];
+    char separador = ' ';
+    int flag = 1;
+    Lista* listaHash = criaLista();
+    Hash* menorHash;
+    for(int j = 0; separador != '\n'; j++){
+        scanf("%s%c ", palavra, &separador);
+        //listaPalavras = insereLista(listaPalavras, strdup(palavra));
+        Hash* aux = NULL;
+        if(flag){
+            aux = buscaRBTHash(b->mapaPalavra,palavra);
+        }
+
+        if(aux == NULL){
+            //printf("Termo %s nao esta mapeado\n",palavra);
+            flag = 0;
+        }
+        if(flag){
+            if(j==0) menorHash = aux;
+            if(retornaItensAtivosHash(aux) < retornaItensAtivosHash(menorHash)) menorHash = aux;
+
+            listaHash = insereLista(listaHash,aux);
+        }
+    }
+
+    if(flag) Interseccao(listaHash,menorHash);
+    liberaLista(listaHash);
+}
+
+
 void LiberaBuscador(Buscador *b){
     percorreLista(b->listaPaginas, (int (*)(void *, void *)) liberaPagina, NULL);
     liberaLista(b->listaPaginas);

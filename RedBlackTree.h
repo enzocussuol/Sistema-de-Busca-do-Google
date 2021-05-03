@@ -10,12 +10,13 @@
 
 #define RED 1
 #define BLACK 0
-
+#include "tabelaHash.h"
 typedef struct rbt RBT;
 
 RBT* inicializaRBT();
 RBT* insereRBT(RBT* rbtree,Pagina* pagina , char* chave);
 int buscaRBT(RBT * rbtree, char* chave);
+Hash* buscaRBTHash(RBT * rbtree, char* chave);
 int isRed(RBT*);
 RBT* rotateLeft(RBT*);
 RBT* rotateRight(RBT*);

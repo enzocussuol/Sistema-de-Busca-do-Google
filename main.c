@@ -28,22 +28,13 @@ int main(int argc, char* argv[]){
 
     calculaPageRankPM(b,grafo);
 
-    imprimeBuscador(b);
+    //imprimeBuscador(b);
+    while(!feof(stdin))
+        buscadordeTermos(b);
 
     liberaGrafo(grafo);
     LiberaBuscador(b);
 
-    //
-//    printf("Digite o texto que deseja buscar:\n");
-//
-//    Lista * listaPalavras = criaLista();
-//    char palavra[TAM_WORD];
-//    char separador = ' ';
-//
-//    for(int j = 0; separador != '\n'; j++){
-//        scanf("%s%c", palavra, &separador);
-//        listaPalavras = insereLista(listaPalavras, strdup(palavra));
-//    }
-//
+
     return 0;
 }
