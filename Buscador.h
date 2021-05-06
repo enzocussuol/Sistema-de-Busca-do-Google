@@ -23,7 +23,7 @@ int retornaNumPaginas(Buscador* b);
 RBT* retornaRBT(Buscador* b);
 void LePaginas(Buscador* buscador);
 void MapeiaPalavras(Buscador * buscador);
-void buscadordeTermos(Buscador*b);
+void buscadordeTermos(Buscador*b,char* buffer);
 void imprimeBuscador(Buscador* buscador);
 void LiberaBuscador(Buscador *b);
 

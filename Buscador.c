@@ -131,35 +131,44 @@ void imprimeBuscador(Buscador* buscador){
 
 }
 
-void buscadordeTermos(Buscador*b){
+void buscadordeTermos(Buscador*b,char* buffer){
 
-    printf("Digite o texto que deseja buscar:\n");
+
 
     Lista * listaPalavras = criaLista();
+
     char palavra[TAM_WORD];
     char separador = ' ';
     int flag = 1;
     Lista* listaHash = criaLista();
     Hash* menorHash;
-    for(int j = 0; separador != '\n'; j++){
-        scanf("%s%c ", palavra, &separador);
-        //listaPalavras = insereLista(listaPalavras, strdup(palavra));
+
+    buffer[strlen(buffer)-1] = '\0'; //retirna o \n lido pelo getline
+
+    char* str = strtok(buffer, " "); //separa as strings pelo espaço
+
+    int j = 0;
+    while(str != NULL){
         Hash* aux = NULL;
-        if(flag){
-            aux = buscaRBTHash(b->mapaPalavra,palavra);
-        }
+
+        aux = buscaRBTHash(b->mapaPalavra,str);
+
 
         if(aux == NULL){
             //printf("Termo %s nao esta mapeado\n",palavra);
             flag = 0;
+            break;
         }
-        if(flag){
-            if(j==0) menorHash = aux;
-            if(retornaItensAtivosHash(aux) < retornaItensAtivosHash(menorHash)) menorHash = aux;
 
-            listaHash = insereLista(listaHash,aux);
-        }
+        if(j==0) menorHash = aux;
+        if(retornaItensAtivosHash(aux) < retornaItensAtivosHash(menorHash)) menorHash = aux;
+
+        listaHash = insereLista(listaHash,aux);
+
+        j++;
+        str = strtok(NULL, " "); // le o proximo string
     }
+
 
     if(flag) Interseccao(listaHash,menorHash);
     liberaLista(listaHash);

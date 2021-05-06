@@ -17,23 +17,24 @@ int main(int argc, char* argv[]){
     Buscador* b = initBuscador();
 
     LePaginas(b);
+
+    //calcula o page rank das paginas lidas
+    Grafo* grafo = inicializaGrafo(retornaNumPaginas(b));
+    preencheGrafo(grafo,b);
+    calculaPageRankPM(b,grafo);
+    liberaGrafo(grafo);
+
     MapeiaPalavras(b);
 
-    Grafo* grafo = inicializaGrafo(retornaNumPaginas(b));
-
-    preencheGrafo(grafo,b);
-
     //imprimeBuscador(b);
-
-    calculaPageRankPM(b,grafo);
-
-    //imprimeBuscador(b);
-    while(!feof(stdin))
-        buscadordeTermos(b);
-
-    liberaGrafo(grafo);
+    unsigned long buffersize = 100;
+    char *buffer = malloc(sizeof(char)*buffersize);
+    while(getline(&buffer,&buffersize,stdin)){
+        buscadordeTermos(b,buffer);
+        if(feof(stdin)) break;
+    }
+    free(buffer);
     LiberaBuscador(b);
-
 
     return 0;
 }
