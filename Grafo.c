@@ -6,6 +6,10 @@
 #include "tabelaHash.h"
 #include <math.h>
 
+#define UNSIGNEDINTLEN sizeof(unsigned int)*8
+#define SetBit(A,k)     ( A[(k)/UNSIGNEDINTLEN] |= (1 << ((k)%UNSIGNEDINTLEN)) )
+#define TestBit(A,k)    ( A[(k)/UNSIGNEDINTLEN] & (1 << ((k)%UNSIGNEDINTLEN)) )
+
 
 #define TAM_WORD 50
 
@@ -15,7 +19,7 @@ typedef struct Vertice{
 }Vertice;
 
 struct grafo{
-    char ** matrizAdj; //matriz que indica se matriz[i][j], tem conexao da pagina I para J
+    unsigned int ** matrizAdj; //matriz que indica se matriz[i][j], tem conexao da pagina I para J
     int tam;
     Vertice* vertices;
 };
@@ -23,11 +27,11 @@ struct grafo{
 Grafo* inicializaGrafo(int nVertices){
     Grafo* novoGrafo = (Grafo*) malloc(sizeof(Grafo));
 
-    novoGrafo->matrizAdj = malloc(sizeof(char*)*nVertices);
+    novoGrafo->matrizAdj = malloc(sizeof(int*)*nVertices);
     novoGrafo->vertices = malloc(sizeof(Vertice)*nVertices);
     for(int i = 0 ;i < nVertices;i++){
-        novoGrafo->matrizAdj[i] = malloc(sizeof(char)*nVertices);
-        for(int j = 0;j < nVertices ; j++){ //inicializa todas as casa da matriz com 0
+        novoGrafo->matrizAdj[i] = malloc(sizeof(int)*((nVertices/UNSIGNEDINTLEN)+1));
+        for(int j = 0;j < (nVertices/UNSIGNEDINTLEN)+1 ; j++){ //inicializa todas as casa da matriz com 0
            novoGrafo->matrizAdj[i][j] = 0;
         }
     }
@@ -62,7 +66,8 @@ void preencheGrafo(Grafo * g, Buscador * buscador){
                                 (int (*)(void *, void *)) comparaNome,
                                 nomePagina);
             indiceDestino = getID(aux);
-            g->matrizAdj[indiceOrigem][indiceDestino] = 1;
+            //g->matrizAdj[indiceOrigem][indiceDestino] = 1;
+            SetBit(g->matrizAdj[indiceOrigem],indiceDestino);
         }
         fscanf(input, "\n");
     }
@@ -91,7 +96,10 @@ static double calculaUltimoTermo(Grafo* grafo, double* ant, int pos){
     double termo = 0;
 
     for(int j = 0; j < grafo->tam; j++){
-        if(grafo->matrizAdj[j][pos] == 1){
+//        if(grafo->matrizAdj[j][pos] == 1){
+//            termo += ant[j]/ grafo->vertices[j].numAdj;
+//        }
+        if(TestBit(grafo->matrizAdj[j],pos)){
             termo += ant[j]/ grafo->vertices[j].numAdj;
         }
     }
