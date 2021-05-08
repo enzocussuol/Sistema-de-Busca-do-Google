@@ -1,16 +1,9 @@
 #include <stdio.h>
-#include <string.h>
-#include "pagina.h"
 #include "Lista.h"
-#include "tabelaHash.h"
-#include "stopword.h"
-#include "RedBlackTree.h"
 #include "Grafo.h"
 #include "Buscador.h"
 
-#define TAM_WORD 50
-#define TAMHASH 49
-#define MAX_PALAVRAS 10
+#define TAM_WORD 100
 
 int main(int argc, char* argv[]){
 

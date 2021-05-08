@@ -109,6 +109,7 @@ static void imprimeInterseccao(Pagina ** vetPaginas, int tam){
     printf("\n");
 }
 
+//Acha a intersecçao entre hashs usando suas caracteristicas
 void Interseccao(Lista* listadeHashs,Hash* menosItens){
     Lista* intersec = criaLista();
     int condicao, max , tam = 0;
@@ -137,11 +138,10 @@ void Interseccao(Lista* listadeHashs,Hash* menosItens){
     Pagina* vet[tam];
     int pos = 0;
     for(Lista* l = intersec; l != NULL; l = retornaProx(l)){
-        //imprimePagina(retornaItem(l));
         vet[pos] = retornaItem(l);
         pos++;
     }
-    //printf("\n");
+    //caso exista interseccao imprime ordenado
     if(tam>0){
         imprimeInterseccao(vet,tam);
     }
@@ -159,12 +159,4 @@ void liberaHash(Hash * hash,int (*cb)(void*,void*)){
 
     free(hash->conteudo);
     free(hash);
-}
-
-void imprimeHash(Hash *hash, void funcaoImprime(void *,void*)){
-    //printf("tamanho da hash: %d\n", hash->tam);
-    for(int i=0; i<hash->tam; i++){
-        //printf("Pos %d da hash\n", i);
-        percorreLista(hash->conteudo[i], (int (*)(void *, void *)) funcaoImprime, NULL);
-    }
 }

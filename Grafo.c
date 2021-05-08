@@ -19,7 +19,7 @@ typedef struct Vertice{
 }Vertice;
 
 struct grafo{
-    unsigned int ** matrizAdj; //matriz que indica se matriz[i][j], tem conexao da pagina I para J
+    unsigned int ** matrizAdj; //matriz que indica se matriz[i][j], tem conexao da pagina I para J , de bits
     int tam;
     Vertice* vertices;
 };
@@ -41,8 +41,12 @@ Grafo* inicializaGrafo(int nVertices){
     return novoGrafo;
 }
 
-void preencheGrafo(Grafo * g, Buscador * buscador){
-    FILE* input = fopen("graph.txt","r");
+//preenche a matriz adjacencia do grafo
+void preencheGrafo(Grafo * g, Buscador * buscador, char* diretorio){
+    char path[200];
+    strcpy(path,diretorio);
+    strcat(path, "graph.txt");
+    FILE* input = fopen(path,"r");
     if(input == NULL){
         printf("Erro na abertura do arquivo grafo\n");
         exit(1);
@@ -84,6 +88,7 @@ static double calculaEk(Grafo* g,double* ant){
     return e/g->tam;
 }
 
+//inicializa as probabilidades
 void inicializaPM(Buscador * b){
     Lista* listaPaginas = retornaListaPaginas(b);
     int n = retornaNumPaginas(b);
@@ -96,9 +101,6 @@ static double calculaUltimoTermo(Grafo* grafo, double* ant, int pos){
     double termo = 0;
 
     for(int j = 0; j < grafo->tam; j++){
-//        if(grafo->matrizAdj[j][pos] == 1){
-//            termo += ant[j]/ grafo->vertices[j].numAdj;
-//        }
         if(TestBit(grafo->matrizAdj[j],pos)){
             termo += ant[j]/ grafo->vertices[j].numAdj;
         }
@@ -109,7 +111,7 @@ static double calculaUltimoTermo(Grafo* grafo, double* ant, int pos){
 
 void calculaPageRankPM(Buscador*b, Grafo* grafo){
     int n = retornaNumPaginas(b);
-    double PR=0;
+    double PR = 0;
     double alfa = 0.85;
     double primeiroTermo, ultimoTermo, termoEspecial;
     double ant[grafo->tam];
@@ -136,11 +138,10 @@ void calculaPageRankPM(Buscador*b, Grafo* grafo){
                 termoEspecial = alfa * ant[i];
                 PR += termoEspecial;
             }
-            //printf("PR: %lf ",PR);
             setRank(grafo->vertices[i].pagina, PR);
             somapr += PR;
         }
-        //printf("PRTOTAL: %f ek : %.12f\n",somapr,calculaEk(grafo,ant));
+
     }while(calculaEk(grafo,ant) > 0.000001);
     //printf("Iteracoes %d\n",j);
 }

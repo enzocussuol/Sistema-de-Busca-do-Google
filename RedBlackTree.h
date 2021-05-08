@@ -1,5 +1,5 @@
 //
-// Created by bonella on 25/04/2021.
+// Created by bonella, enzo, danilo on 25/04/2021.
 //
 
 #ifndef TRABALHOVSH_REDBLACKTREE_H
