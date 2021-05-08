@@ -5,7 +5,7 @@
 #include "Buscador.h"
 
 #define TAM_WORD 50
-#define TAMHASH 109
+#define TAMHASH 59
 
 struct buscador{
     Lista* listaPaginas;
@@ -144,8 +144,6 @@ void imprimeBuscador(Buscador* buscador){
 
 void buscadordeTermos(Buscador*b,char* buffer){
 
-
-
     Lista * listaPalavras = criaLista();
 
     char palavra[TAM_WORD];
@@ -160,14 +158,19 @@ void buscadordeTermos(Buscador*b,char* buffer){
 
     int j = 0;
     while(str != NULL){
-        Hash* aux = NULL;
+        Lista* aux2 = NULL;
+        Hash* aux = inicializaHash(TAMHASH);
         stringLower(str);
-        aux = buscaRBTHash(b->mapaPalavra,str);
+        aux2 = buscaRBTLista(b->mapaPalavra,str);
 
-        if(aux == NULL){
+        if(aux2 == NULL){
             printf("Termo %s nao esta mapeado\n",str);
             flag = 0;
             break;
+        }
+
+        for(Lista* l = aux2;l != NULL;l= retornaProx(l)){
+            acessaHash(aux, (int (*)(void *, int)) hashPagina, (int (*)(void *, void *)) comparaPagina, retornaItem(l));
         }
 
         if(j==0) menorHash = aux;
@@ -181,6 +184,7 @@ void buscadordeTermos(Buscador*b,char* buffer){
 
 
     if(flag) Interseccao(listaHash,menorHash);
+    percorreLista(listaHash, (int (*)(void *, void *)) liberaHash, NULL);
     liberaLista(listaHash);
 }
 
