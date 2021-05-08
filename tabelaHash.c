@@ -1,5 +1,5 @@
 //
-// Created by bonella on 26/04/2021.
+// Created by bonella, enzo, danilo on 26/04/2021.
 //
 
 #include "tabelaHash.h"
@@ -12,12 +12,15 @@ struct tabelahash{
     int k;
 };
 
+//Calcula um tamanho primo para uma Hash a partir de um parametro K
+//Formula: tam = 2^k - delta
 static int calculaTamHash(int k){
     char deltaK[27] = {1, 3, 1, 5, 3, 3, 9, 3, 1, 3, 19, 15, 1, 5, 1, 3, 9, 3, 15, 3, 39, 5, 39, 57, 3, 35, 1};
 
     return pow(2, k) - deltaK[k - 5];
 }
 
+//Inicializa uma hash vazia
 Hash * inicializaHash(int k){
     Hash * novaHash = (Hash*) malloc(sizeof(Hash));
 
@@ -34,6 +37,7 @@ Hash * inicializaHash(int k){
     return novaHash;
 }
 
+//Expande uma hash, criando uma nova hash e liberando a antiga
 Hash* resizeHash(Hash* hashAntiga, int findHash(void*, int), int compare(void*, void*)){
     Hash* novaHash = inicializaHash(hashAntiga->k + 1);
     novaHash->qtdItens = hashAntiga->qtdItens;
@@ -51,18 +55,22 @@ Hash* resizeHash(Hash* hashAntiga, int findHash(void*, int), int compare(void*, 
     return novaHash;
 }
 
+//Calcula a densidade de uma tabela hash
 int calculaDensidade(Hash* hash){
     return hash->qtdItens/hash->tam;
 }
 
+//Retorna a quantidade de itens dentro da hash
 int retornaItensAtivosHash(Hash* h){
     return h->qtdItens;
 }
 
+//Retorna o parametro K, que calcula o tamanho da Hash
 int retornaKHash(Hash* hash){
     return hash->k;
 }
 
+//Insere um novo dado na hash, e caso já exista indica sua existencia
 int acessaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado){
     int pos = findHash(dado, hash->tam);
 
@@ -74,6 +82,7 @@ int acessaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*),
     return 0;
 }
 
+//Verifica a existencia de um dado dentro da tabela Hash
 int buscaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado){
     int pos = findHash(dado, hash->tam);
 
@@ -83,6 +92,7 @@ int buscaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), 
     return 0;
 }
 
+//Retorna o dado que esta se buscando
 void* buscaDadoHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado){
     int pos = findHash(dado, hash->tam);
 
@@ -96,6 +106,7 @@ int retornaTam(Hash* hash){
     return hash->tam;
 }
 
+// Imprime as paginas de forma ordenada pelo PageRank
 static void imprimeInterseccao(Pagina ** vetPaginas, int tam){
     qsort(vetPaginas, tam, sizeof(vetPaginas[0]), cmpPRPaginas);
 
@@ -118,17 +129,16 @@ void Interseccao(Lista* listadeHashs,Hash* menosItens){
         if(menosItens->conteudo[i] != NULL){
             for(Lista * list = menosItens->conteudo[i]; list != NULL; list = retornaProx(list)){ //percorre toda a lista da posicao I da hash
                 a = retornaItem(list); // a = pagina atual da lista
-                condicao = 0;
-                max = 0;
-                for(Lista* l = listadeHashs; l!=NULL; l= retornaProx(l)){
-                    if(retornaItem(l) != menosItens){
+                condicao = 0; //Indica a quantidade de palavras que foi achadada na pagina
+                max = 0; //Indica o total de palavras que foi buscada
+                for(Lista* l = listadeHashs; l!=NULL; l= retornaProx(l)) {
+                    if (retornaItem(l) != menosItens) {
                         condicao += buscaHash(retornaItem(l), (int (*)(void *, int)) hashPagina,
                                               (int (*)(void *, void *)) comparaPagina, a);
                         max++;
                     }
                 }
-                //printf("cond = %d, menosItensQtd %d", condicao, menosItens->qtdItens);
-                if(condicao == max){
+                if(condicao == max){ // Insira caso a pagina contenha todas palavras buscadas
                     intersec = insereLista(intersec,a);
                     tam++;
                 }
@@ -137,6 +147,7 @@ void Interseccao(Lista* listadeHashs,Hash* menosItens){
     }
     Pagina* vet[tam];
     int pos = 0;
+    //converte lista em vetor
     for(Lista* l = intersec; l != NULL; l = retornaProx(l)){
         vet[pos] = retornaItem(l);
         pos++;

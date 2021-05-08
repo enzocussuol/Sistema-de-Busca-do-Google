@@ -1,5 +1,4 @@
 #include "pagina.h"
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -50,6 +49,7 @@ int comparaNome(Pagina*a, char * nome){
     return strcmp(a->nome, nome);
 }
 
+// Reliza o hash de uma pagina utilizando o metodo de Horner
 int hashNomePagina(char * nomepagina, int tamHash){
     int cont = 0;
 
@@ -63,6 +63,9 @@ int hashPagina(Pagina* pagina, int tamHash){
     return hashNomePagina(pagina->nome, tamHash);
 }
 
+// Realiza a comparacao entre duas paginas. Funcao utilizada no qsort
+// Criterio: Page Rank
+// Desempate: Ordem lexicografica
 int cmpPRPaginas(const void* p, const void* q){
     const Pagina* const* p1 = (const Pagina* const*) p;
     const Pagina* const* p2 = (const Pagina* const*) q;
@@ -74,10 +77,6 @@ int cmpPRPaginas(const void* p, const void* q){
     else{
         return comparaPagina((Pagina *) p1, (Pagina *) p2);
     }
-}
-
-void imprimePagina(Pagina * p){
-    printf("%s "/*, Id %d, Rank %.8lf */, p->nome/*, p->id, p->rank*/);
 }
 
 void liberaPagina(Pagina* p){

@@ -2,7 +2,6 @@
 // Created by bonella on 26/04/2021.
 //
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "stopword.h"
@@ -21,11 +20,7 @@ StopWord* inicializaStopWord(char* palavra){
     return novaStopWord;
 }
 
-
-char* retornaPalavra(StopWord* stopWord){
-    return stopWord->palavra;
-}
-
+// Realiza o hash de uma stopword utilizando o metodo de Horner
 int hashStopWord(StopWord* stopWord, int tamHash){
     int cont = 0;
 
@@ -43,8 +38,4 @@ int comparaStopWord(StopWord* sw1, StopWord* sw2){
 void liberaStopWord(StopWord* stopWord){
     free(stopWord->palavra);
     free(stopWord);
-}
-
-void imprimeStopWord(StopWord* stopWord){
-    printf("%s\n", stopWord->palavra);
 }

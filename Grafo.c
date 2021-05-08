@@ -1,5 +1,5 @@
 //
-// Created by bonella on 28/04/2021.
+// Created by bonella, enzo, danilo on 28/04/2021.
 //
 
 #include "Grafo.h"
@@ -10,8 +10,7 @@
 #define SetBit(A,k)     ( A[(k)/UNSIGNEDINTLEN] |= (1 << ((k)%UNSIGNEDINTLEN)) )
 #define TestBit(A,k)    ( A[(k)/UNSIGNEDINTLEN] & (1 << ((k)%UNSIGNEDINTLEN)) )
 
-
-#define TAM_WORD 50
+#define TAM_WORD 100
 
 typedef struct Vertice{
     int numAdj;
@@ -23,6 +22,7 @@ struct grafo{
     int tam;
     Vertice* vertices;
 };
+
 
 Grafo* inicializaGrafo(int nVertices){
     Grafo* novoGrafo = (Grafo*) malloc(sizeof(Grafo));
@@ -70,7 +70,6 @@ void preencheGrafo(Grafo * g, Buscador * buscador, char* diretorio){
                                 (int (*)(void *, void *)) comparaNome,
                                 nomePagina);
             indiceDestino = getID(aux);
-            //g->matrizAdj[indiceOrigem][indiceDestino] = 1;
             SetBit(g->matrizAdj[indiceOrigem],indiceDestino);
         }
         fscanf(input, "\n");
@@ -143,16 +142,6 @@ void calculaPageRankPM(Buscador*b, Grafo* grafo){
         }
 
     }while(calculaEk(grafo,ant) > 0.000001);
-    //printf("Iteracoes %d\n",j);
-}
-
-void imprimeGrafo(Grafo* grafo){
-    for(int i = 0; i < grafo->tam; i++){
-        for(int j = 0; j < grafo->tam; j++){
-            printf("%d ", grafo->matrizAdj[i][j]);
-        }
-        printf("\n");
-    }
 }
 
 void liberaGrafo(Grafo* grafo){

@@ -5,7 +5,6 @@
 #ifndef TRABALHO_3_DE_ED2_BUSCADOR_H
 #define TRABALHO_3_DE_ED2_BUSCADOR_H
 
-
 #include <ctype.h>
 #include <string.h>
 
@@ -20,11 +19,9 @@ Buscador* initBuscador();
 Lista* retornaListaPaginas(Buscador* b);
 Hash* retornaHashPaginas(Buscador* b);
 int retornaNumPaginas(Buscador* b);
-RBT* retornaRBT(Buscador* b);
-void LePaginas(Buscador* buscador);
-void MapeiaPalavras(Buscador * buscador);
+void LePaginas(Buscador* buscador, char*);
+void MapeiaPalavras(Buscador * buscador, char*);
 void buscadordeTermos(Buscador*b,char* buffer);
-void imprimeBuscador(Buscador* buscador);
 void LiberaBuscador(Buscador *b);
 
 #endif //TRABALHO_3_DE_ED2_BUSCADOR_H

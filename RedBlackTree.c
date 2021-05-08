@@ -1,14 +1,11 @@
 //
-// Created by bonella on 25/04/2021.
+// Created by bonella, enzo, danilo on 25/04/2021.
 //
 
 #include "RedBlackTree.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-
-#define TAMHASH 67
 
 struct rbt{
     char* chave;
@@ -54,17 +51,6 @@ RBT* insereRBT( RBT* rbtree,Pagina* pagina , char* chave){
     if(isRed(rbtree->esquerda) && isRed(rbtree->direita)) flipColors(rbtree);
 
     return rbtree;
-}
-
-int buscaRBT(RBT * rbtree, char* chave){
-    while(rbtree != NULL) {
-        int comp;
-        comp = compare(chave,rbtree->chave);
-        if(comp < 0) rbtree = rbtree->esquerda;
-        else if(comp > 0) rbtree = rbtree->direita;
-        else return 1;
-    }
-    return -1;
 }
 
 Lista* buscaRBTLista(RBT * rbtree, char* chave){

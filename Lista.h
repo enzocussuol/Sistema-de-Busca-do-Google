@@ -1,9 +1,10 @@
 //
-// Created by bonella on 14/12/2020.
+// Created by bonella, enzo, danilo on 14/12/2020.
 //
 
 #ifndef EXERCICIO12_LISTA_H
 #define EXERCICIO12_LISTA_H
+
 #include <stdlib.h>
 #include <stdio.h>
 

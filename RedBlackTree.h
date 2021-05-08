@@ -16,7 +16,6 @@ typedef struct rbt RBT;
 
 RBT* inicializaRBT();
 RBT* insereRBT(RBT* rbtree,Pagina* pagina , char* chave);
-int buscaRBT(RBT * rbtree, char* chave);
 Lista* buscaRBTLista(RBT * rbtree, char* chave);
 int isRed(RBT*);
 RBT* rotateLeft(RBT*);

@@ -1,8 +1,10 @@
 //
-// Created by bonella on 14/12/2020.
+// Created by bonella, enzo, danilo on 14/12/2020.
 //
 
 #include "Lista.h"
+
+// Implementacao de uma lista simplesmente encadeada sem sentinela
 
 struct lista{
     void* item;
@@ -39,6 +41,10 @@ Lista* retiraLista(Lista* lista, int (*cb)(void*,void*),void* chave){
 
 }
 
+// Percorre a lista realizando uma acao em cada posicao dela
+// Acao especificada pela funcao de callback
+// Se dado for diferente de NULL, busca o dado na lista
+// Retorna 1 se o dado se encontra, e 0 se nao
 int percorreLista(Lista* lista, int (*cb)(void*, void*), void* dado){
     Lista* p;
 
@@ -48,6 +54,11 @@ int percorreLista(Lista* lista, int (*cb)(void*, void*), void* dado){
     }
     return 0;
 }
+
+// Percorre a lista realizando uma acao em cada posicao dela
+// Acao especificada pela funcao de callback
+// Se dado for diferente de NULL, busca o dado na lista
+// Retorna o dado se ele se encontra, e NULL se nao
 void* percorreListaRetornaDado(Lista* lista, int (*cb)(void*, void*), void* dado){
     Lista* p;
 

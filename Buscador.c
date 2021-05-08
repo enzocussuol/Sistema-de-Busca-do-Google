@@ -4,7 +4,7 @@
 
 #include "Buscador.h"
 
-#define TAM_WORD 50
+#define TAM_WORD 100
 #define HASHK 7
 #define MAX_DENSIDADE 8
 
@@ -17,7 +17,6 @@ struct buscador{
 };
 
 Buscador* initBuscador(){
-
     Buscador* novo = malloc(sizeof(*novo));
 
     novo->hashPaginas = inicializaHash(HASHK);
@@ -27,7 +26,6 @@ Buscador* initBuscador(){
     novo->numPaginas = 0;
 
     return novo;
-
 }
 
 Lista* retornaListaPaginas(Buscador* b){
@@ -40,10 +38,6 @@ Hash* retornaHashPaginas(Buscador* b){
 
 int retornaNumPaginas(Buscador* b){
     return b->numPaginas;
-}
-
-RBT* retornaRBT(Buscador* b){
-    return b->mapaPalavra;
 }
 
 //le o arquivo index.txt e adiciona as paginas lidas no hash e lista de paginas
@@ -149,24 +143,7 @@ void MapeiaPalavras(Buscador * buscador, char* diretorio){
 
 }
 
-void imprimeBuscador(Buscador* buscador){
-
-    printf("O buscador possui %d paginas\n\n",buscador->numPaginas);
-
-//    printf("Lista de paginas\n\n");
-//    percorreLista(buscador->listaPaginas, (int (*)(void *, void *)) imprimePagina, NULL);
-
-//    printf("\n\nHash de paginas\n\n");
-//    imprimeHash(buscador->hashPaginas, (void (*)(void *, void *)) imprimePagina);
-//
-//    printf("\n\nHash de Stopwords\n\n");
-//    imprimeHash(buscador->hashSW, (void (*)(void *, void *)) imprimeStopWord);
-
-    printf("\n\nMapa de Palavras\n\n");
-    imprimeRBT(buscador->mapaPalavra);
-
-}
-
+//funcao responsavel por buscar as ocorrencias de um conjunto de palavras em varios arquivos
 void buscadordeTermos(Buscador*b,char* buffer){
 
     int flag = 1; //flag caso uma palavra nao esteja mapeada
@@ -212,7 +189,7 @@ void buscadordeTermos(Buscador*b,char* buffer){
     liberaLista(listaHash);
 }
 
-
+// Funcao que libera o buscador e todos seus elementos
 void LiberaBuscador(Buscador *b){
     percorreLista(b->listaPaginas, (int (*)(void *, void *)) liberaPagina, NULL);
     liberaLista(b->listaPaginas);
