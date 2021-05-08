@@ -28,8 +28,6 @@ static int compare(char* a, char* b){
 RBT* insereRBT( RBT* rbtree,Pagina* pagina , char* chave){
     if(rbtree == NULL){
         RBT* novo = malloc(sizeof(*novo));
-        //novo->PaginasOcorrencia = inicializaHash(TAMHASH);
-        //acessaHash(novo->PaginasOcorrencia, (int (*)(void *, int)) hashPagina,(int (*)(void *, void *)) comparaPagina, pagina);
         novo->PaginasOcorrencia = criaLista();
         novo->PaginasOcorrencia = insereLista(novo->PaginasOcorrencia,pagina);
         novo->chave = strdup(chave);
@@ -46,7 +44,6 @@ RBT* insereRBT( RBT* rbtree,Pagina* pagina , char* chave){
         //caso ele tenha recebido a msm palavra da pagina
         if(retornaItem(rbtree->PaginasOcorrencia )!= pagina)
             rbtree->PaginasOcorrencia = insereLista(rbtree->PaginasOcorrencia,pagina);
-        //acessaHash(rbtree->PaginasOcorrencia, (int (*)(void *, int)) hashPagina,(int (*)(void *, void *)) comparaPagina, pagina);
     }
 
     //LEAN LEFT
@@ -122,8 +119,6 @@ void imprimeRBT(RBT* rbtree){
     imprimeRBT(rbtree->esquerda);
     printf("PALAVRA: ");
     printf("%s\t|\t",rbtree->chave);
-    //printf("Paginas: \n");
-    //imprimeHash(rbtree->PaginasOcorrencia, (void (*)(void *, void *)) imprimePagina);
     printf("\n");
 
     imprimeRBT(rbtree->direita);
@@ -132,7 +127,6 @@ void imprimeRBT(RBT* rbtree){
 void liberaRBT(RBT* rbtree){
     if(rbtree != NULL){
         free(rbtree->chave);
-        //liberaHash(rbtree->PaginasOcorrencia,NULL);
         liberaLista(rbtree->PaginasOcorrencia);
         liberaRBT(rbtree->esquerda);
         liberaRBT(rbtree->direita);

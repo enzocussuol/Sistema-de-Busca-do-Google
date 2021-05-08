@@ -1,2 +1,10 @@
 cmake-build-debug
 CMakeLists.txt
+.idea
+*.zip
+ConjuntodeTeste2
+pages
+*.txt
+*.o
+teste
+*.png

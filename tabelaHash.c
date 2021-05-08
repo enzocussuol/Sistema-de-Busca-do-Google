@@ -9,22 +9,58 @@ struct tabelahash{
     Lista** conteudo;
     int tam;
     int qtdItens;
+    int k;
 };
 
-Hash * inicializaHash(int tam){
+static int calculaTamHash(int k){
+    char deltaK[27] = {1, 3, 1, 5, 3, 3, 9, 3, 1, 3, 19, 15, 1, 5, 1, 3, 9, 3, 15, 3, 39, 5, 39, 57, 3, 35, 1};
+
+    return pow(2, k) - deltaK[k - 5];
+}
+
+Hash * inicializaHash(int k){
     Hash * novaHash = (Hash*) malloc(sizeof(Hash));
-    novaHash->conteudo = (Lista**) malloc(sizeof(Lista*) * tam);
+
+    novaHash->k = k;
+    novaHash->tam = calculaTamHash(novaHash->k);
+
+    novaHash->conteudo = (Lista**) malloc(sizeof(Lista*) * novaHash->tam);
     novaHash->qtdItens = 0;
-    for(int i = 0; i < tam; i++){
+
+    for(int i = 0; i < novaHash->tam; i++){
         novaHash->conteudo[i] = criaLista();
     }
-    novaHash->tam = tam;
 
     return novaHash;
 }
 
+Hash* resizeHash(Hash* hashAntiga, int findHash(void*, int), int compare(void*, void*)){
+    Hash* novaHash = inicializaHash(hashAntiga->k + 1);
+    novaHash->qtdItens = hashAntiga->qtdItens;
+
+    for(int i = 0; i < hashAntiga->tam; i++){
+        if(hashAntiga->conteudo[i] != NULL){
+            for(Lista* l = hashAntiga->conteudo[i]; l != NULL; l = retornaProx(l)){
+                acessaHash(novaHash, findHash, compare, retornaItem(l));
+            }
+        }
+    }
+
+    liberaHash(hashAntiga, NULL);
+
+    return novaHash;
+}
+
+int calculaDensidade(Hash* hash){
+    return hash->qtdItens/hash->tam;
+}
+
 int retornaItensAtivosHash(Hash* h){
     return h->qtdItens;
+}
+
+int retornaKHash(Hash* hash){
+    return hash->k;
 }
 
 int acessaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado){

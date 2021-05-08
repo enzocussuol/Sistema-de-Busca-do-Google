@@ -5,7 +5,8 @@
 #include "Buscador.h"
 
 #define TAM_WORD 50
-#define TAMHASH 59
+#define HASHK 7
+#define MAX_DENSIDADE 8
 
 struct buscador{
     Lista* listaPaginas;
@@ -19,18 +20,14 @@ Buscador* initBuscador(){
 
     Buscador* novo = malloc(sizeof(*novo));
 
+    novo->hashPaginas = inicializaHash(HASHK);
+    novo->hashSW = inicializaHash(HASHK);
     novo->listaPaginas = criaLista();
-    //novo->hashPaginas = inicializaHash(TAMHASH);
-    novo->hashSW = inicializaHash(TAMHASH);
     novo->mapaPalavra = inicializaRBT();
     novo->numPaginas = 0;
 
     return novo;
 
-}
-
-static void initHashPaginas(Buscador* b,int tam){
-    b->hashPaginas = inicializaHash(tam);
 }
 
 Lista* retornaListaPaginas(Buscador* b){
@@ -49,7 +46,6 @@ RBT* retornaRBT(Buscador* b){
     return b->mapaPalavra;
 }
 
-
 void LePaginas(Buscador* buscador){
     FILE* index = fopen("index.txt", "r");
 
@@ -58,15 +54,16 @@ void LePaginas(Buscador* buscador){
     while(fscanf(index, "%s\n", nomePagina) == 1){
         Pagina* pagina = inicializaPagina(nomePagina,i);
         buscador->listaPaginas = insereLista(buscador->listaPaginas,pagina);
-        buscador->numPaginas++;
-        i++;
-    }
-    initHashPaginas(buscador,i*1.3);
-    for(Lista* l = buscador->listaPaginas;l!= NULL ; l = retornaProx(l)){
         acessaHash(buscador->hashPaginas,
                    (int (*)(void *, int)) hashPagina,
                    (int (*)(void *, void *)) comparaPagina,
-                   retornaItem(l));
+                   pagina);
+        buscador->numPaginas++;
+        i++;
+
+        if(calculaDensidade(buscador->hashPaginas) > MAX_DENSIDADE) buscador->hashPaginas = resizeHash(buscador->hashPaginas,
+                                                            (int (*)(void *, int)) hashPagina,
+                                                            (int (*)(void *, void *)) comparaPagina);
     }
 
     fclose(index);
@@ -86,6 +83,10 @@ static void leStopWords(Buscador* buscador){
         if(acessaHash(buscador->hashSW, (int (*)(void *, int)) hashStopWord, (int (*)(void *, void *)) comparaStopWord, sw)){
             liberaStopWord(sw);
         }
+
+        if(calculaDensidade(buscador->hashSW) > MAX_DENSIDADE) buscador->hashSW = resizeHash(buscador->hashSW,
+                                                            (int (*)(void *, int)) hashPagina,
+                                                            (int (*)(void *, void *)) comparaPagina);
     }
     fclose(filesw);
 }
@@ -159,7 +160,7 @@ void buscadordeTermos(Buscador*b,char* buffer){
     int j = 0;
     while(str != NULL){
         Lista* aux2 = NULL;
-        Hash* aux = inicializaHash(TAMHASH);
+        Hash* aux = inicializaHash(retornaKHash(b->hashPaginas));
         stringLower(str);
         aux2 = buscaRBTLista(b->mapaPalavra,str);
 

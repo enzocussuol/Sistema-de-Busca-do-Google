@@ -9,11 +9,14 @@ typedef struct tabelahash Hash;
 
 #include "stdlib.h"
 #include "Lista.h"
+#include <math.h>
 
 
-
-Hash * inicializaHash();
+Hash * inicializaHash(int);
+Hash* resizeHash(Hash* hashAntiga, int findHash(void*, int), int compare(void*, void*));
+int calculaDensidade(Hash*);
 int retornaItensAtivosHash(Hash* h);
+int retornaKHash(Hash*);
 int acessaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado);
 int buscaHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado);
 void* buscaDadoHash(Hash * hash, int findHash(void*, int), int compare(void*, void*), void * dado);
