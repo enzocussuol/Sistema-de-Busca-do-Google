@@ -21,6 +21,7 @@ StopWord* inicializaStopWord(char* palavra){
     return novaStopWord;
 }
 
+
 char* retornaPalavra(StopWord* stopWord){
     return stopWord->palavra;
 }

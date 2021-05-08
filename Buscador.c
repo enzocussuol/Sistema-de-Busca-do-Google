@@ -5,7 +5,7 @@
 #include "Buscador.h"
 
 #define TAM_WORD 50
-#define TAMHASH 49
+#define TAMHASH 109
 
 struct buscador{
     Lista* listaPaginas;
@@ -20,13 +20,17 @@ Buscador* initBuscador(){
     Buscador* novo = malloc(sizeof(*novo));
 
     novo->listaPaginas = criaLista();
-    novo->hashPaginas = inicializaHash(TAMHASH);
+    //novo->hashPaginas = inicializaHash(TAMHASH);
     novo->hashSW = inicializaHash(TAMHASH);
     novo->mapaPalavra = inicializaRBT();
     novo->numPaginas = 0;
 
     return novo;
 
+}
+
+static void initHashPaginas(Buscador* b,int tam){
+    b->hashPaginas = inicializaHash(tam);
 }
 
 Lista* retornaListaPaginas(Buscador* b){
@@ -45,6 +49,7 @@ RBT* retornaRBT(Buscador* b){
     return b->mapaPalavra;
 }
 
+
 void LePaginas(Buscador* buscador){
     FILE* index = fopen("index.txt", "r");
 
@@ -52,13 +57,16 @@ void LePaginas(Buscador* buscador){
     int i = 0;
     while(fscanf(index, "%s\n", nomePagina) == 1){
         Pagina* pagina = inicializaPagina(nomePagina,i);
-        acessaHash(buscador->hashPaginas,
-                   (int (*)(void *, int)) hashPagina,
-                   (int (*)(void *, void *)) comparaPagina,
-                   pagina);
         buscador->listaPaginas = insereLista(buscador->listaPaginas,pagina);
         buscador->numPaginas++;
         i++;
+    }
+    initHashPaginas(buscador,i*1.3);
+    for(Lista* l = buscador->listaPaginas;l!= NULL ; l = retornaProx(l)){
+        acessaHash(buscador->hashPaginas,
+                   (int (*)(void *, int)) hashPagina,
+                   (int (*)(void *, void *)) comparaPagina,
+                   retornaItem(l));
     }
 
     fclose(index);
@@ -75,7 +83,9 @@ static void leStopWords(Buscador* buscador){
     char palavra[30];
     while(fscanf(filesw, "%s\n", palavra) == 1){
         StopWord * sw = inicializaStopWord(palavra);
-        acessaHash(buscador->hashSW, (int (*)(void *, int)) hashStopWord, (int (*)(void *, void *)) comparaStopWord, sw);
+        if(acessaHash(buscador->hashSW, (int (*)(void *, int)) hashStopWord, (int (*)(void *, void *)) comparaStopWord, sw)){
+            liberaStopWord(sw);
+        }
     }
     fclose(filesw);
 }
@@ -111,14 +121,15 @@ void MapeiaPalavras(Buscador * buscador){
 
     //neste momento Hash de StopWords pode ser liberada
     liberaHash(buscador->hashSW, (int (*)(void *, void *)) liberaStopWord);
+
 }
 
 void imprimeBuscador(Buscador* buscador){
 
     printf("O buscador possui %d paginas\n\n",buscador->numPaginas);
 
-    printf("Lista de paginas\n\n");
-    percorreLista(buscador->listaPaginas, (int (*)(void *, void *)) imprimePagina, NULL);
+//    printf("Lista de paginas\n\n");
+//    percorreLista(buscador->listaPaginas, (int (*)(void *, void *)) imprimePagina, NULL);
 
 //    printf("\n\nHash de paginas\n\n");
 //    imprimeHash(buscador->hashPaginas, (void (*)(void *, void *)) imprimePagina);
@@ -150,12 +161,11 @@ void buscadordeTermos(Buscador*b,char* buffer){
     int j = 0;
     while(str != NULL){
         Hash* aux = NULL;
-
+        stringLower(str);
         aux = buscaRBTHash(b->mapaPalavra,str);
 
-
         if(aux == NULL){
-            //printf("Termo %s nao esta mapeado\n",palavra);
+            printf("Termo %s nao esta mapeado\n",str);
             flag = 0;
             break;
         }

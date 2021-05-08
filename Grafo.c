@@ -79,9 +79,9 @@ static double calculaEk(Grafo* g,double* ant){
     double e = 0;
     for(int i = 0 ; i < g->tam; i++){
         double diff = getRank(g->vertices[i].pagina) - ant[i];
-        e += diff*diff;
+        e += fabs(diff);
     }
-    return sqrt(e);
+    return e/g->tam;
 }
 
 void inicializaPM(Buscador * b){

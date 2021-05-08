@@ -77,7 +77,7 @@ int cmpPRPaginas(const void* p, const void* q){
 }
 
 void imprimePagina(Pagina * p){
-    printf("Pagina %s, Id %d, Rank %.8lf\n", p->nome, p->id, p->rank);
+    printf("%s "/*, Id %d, Rank %.8lf */, p->nome/*, p->id, p->rank*/);
 }
 
 void liberaPagina(Pagina* p){

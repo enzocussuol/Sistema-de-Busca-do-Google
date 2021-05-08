@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 
-#define TAMHASH 1
+#define TAMHASH 67
 
 struct rbt{
     char* chave;
@@ -118,7 +118,7 @@ void imprimeRBT(RBT* rbtree){
     printf("PALAVRA: ");
     printf("%s\t|\t",rbtree->chave);
     //printf("Paginas: \n");
-    //imprimeHash(rbtree->PaginasOcorrencia, (void (*)(void *, void *)) imprimePagina);
+    imprimeHash(rbtree->PaginasOcorrencia, (void (*)(void *, void *)) imprimePagina);
     printf("\n");
 
     imprimeRBT(rbtree->direita);

@@ -25,13 +25,13 @@ int main(int argc, char* argv[]){
     liberaGrafo(grafo);
 
     MapeiaPalavras(b);
-
+    //imprimeBuscador(b);
     //imprimeBuscador(b);
     unsigned long buffersize = 100;
     char *buffer = malloc(sizeof(char)*buffersize);
     while(getline(&buffer,&buffersize,stdin)){
-        buscadordeTermos(b,buffer);
         if(feof(stdin)) break;
+        buscadordeTermos(b,buffer);
     }
     free(buffer);
     LiberaBuscador(b);

@@ -115,7 +115,7 @@ void Interseccao(Lista* listadeHashs,Hash* menosItens){
 void liberaHash(Hash * hash,int (*cb)(void*,void*)){
     for(int i = 0; i < hash->tam; i++){
         if(cb != NULL){
-            percorreLista(hash->conteudo[i],cb,0);
+            percorreLista(hash->conteudo[i],cb,NULL);
         }
 
         liberaLista(hash->conteudo[i]);
