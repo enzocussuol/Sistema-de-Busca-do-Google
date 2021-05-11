@@ -124,7 +124,6 @@ void MapeiaPalavras(Buscador * buscador, char* diretorio){
             printf("Erro na abertura de arquivo\n");
             exit(1);
         }
-
         char palavra[TAM_WORD];
         while(fscanf(file,"%s ", palavra) == 1) {
             stringLower(palavra);
@@ -149,7 +148,7 @@ void buscadordeTermos(Buscador*b,char* buffer){
     int flag = 1; //flag caso uma palavra nao esteja mapeada
     Lista* listaHash = criaLista();
     Hash* menorHash;
-
+    printf("search:%s",buffer);
     buffer[strlen(buffer)-1] = '\0'; //retirna o \n lido pelo getline
 
     char* str = strtok(buffer, " "); //separa as strings pelo espaço
@@ -165,6 +164,7 @@ void buscadordeTermos(Buscador*b,char* buffer){
         if(aux2 == NULL){
             //printf("Termo %s nao esta mapeado\n",str);
             flag = 0;
+            liberaHash(aux,NULL);
             break;
         }
 

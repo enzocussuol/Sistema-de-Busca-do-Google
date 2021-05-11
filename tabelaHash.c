@@ -110,10 +110,12 @@ int retornaTam(Hash* hash){
 static void imprimeInterseccao(Pagina ** vetPaginas, int tam){
     qsort(vetPaginas, tam, sizeof(vetPaginas[0]), cmpPRPaginas);
 
+    printf("pages:");
     for(int i = 0; i < tam; i++){
         printf("%s ", getNome(vetPaginas[i]));
     }
     printf("\n");
+    printf("pr:");
     for(int i = 0; i < tam; i++){
         printf("%.8f ", getRank(vetPaginas[i]));
     }
