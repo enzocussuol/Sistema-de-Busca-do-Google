@@ -164,6 +164,8 @@ void buscadordeTermos(Buscador*b,char* buffer){
         if(aux2 == NULL){
             //printf("Termo %s nao esta mapeado\n",str);
             flag = 0;
+            printf("pages:\n");
+            printf("pr:\n");
             liberaHash(aux,NULL);
             break;
         }
