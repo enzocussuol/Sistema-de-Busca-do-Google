@@ -154,9 +154,14 @@ void Interseccao(Lista* listadeHashs,Hash* menosItens){
         vet[pos] = retornaItem(l);
         pos++;
     }
+
     //caso exista interseccao imprime ordenado
     if(tam>0){
         imprimeInterseccao(vet,tam);
+    }
+    else{
+        printf("pages:\n");
+        printf("pr:\n");
     }
     liberaLista(intersec);
 }

@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include "stopword.h"
 
 struct stopWord{
@@ -26,6 +27,7 @@ int hashStopWord(StopWord* stopWord, int tamHash){
 
     for(int i = 0; i < stopWord->tam; i++){
         cont = (31*cont + stopWord->palavra[i]) % tamHash;
+
     }
 
     return cont;

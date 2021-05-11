@@ -1,6 +1,7 @@
 #include "pagina.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 struct pagina{
     char* nome;
